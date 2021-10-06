@@ -10,7 +10,7 @@ La variable $HOME est le répertoire courant de votre utilisateur. Vous pouvez c
 mkdir $HOME/kafka
 ```
 Télécharger Kafka : http://kafka.apache.org/downloads.html  (https://dlcdn.apache.org/kafka/3.0.0/kafka_2.13-3.0.0.tgz)
-Télécharger Java : http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html (optionnel si vous avez déjà java)
+Télécharger Java : http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html (optionnel si vous avez déjà java)   
 Télécharger zookeeper : http://zookeeper.apache.org/releases.html  (optionnel)
 
 Copier les fichiers téléchargés dans le repertoire kafka.
@@ -30,8 +30,8 @@ https://www.java.com/fr/download/help/windows_manual_download.html#download
 
 Pour lancer Kafka sur votre machine, vous devez avoir deux serveurs :
 
-*Le Zookeeper (le gestionnaire de cluter kafka).
-*Le serveur Kafka.
+* Le Zookeeper (le gestionnaire de cluter kafka).  
+* Le serveur Kafka.  
 
 Pour faciliter les configurations, vous devez créer ces deux répertoires. On découvrira le long du temps à quoi ils vont servir.
 
@@ -52,6 +52,9 @@ cd $HOME/kafka/kafka_2.13-3.0.0
 vi ./config/zookeeper.properties
 ```
 Ce fichier contient plusieurs lignes. Vous devez modifier la ligne suivante en settant le chemin absolu du répertoire log_zookeeper.
+```
+dataDir=/tmp/zookeeper
+```
 
 Pour lancer Zookeeper il faut exécuter la commande suivante :
 ```
@@ -66,3 +69,30 @@ Pour windows
 
 Zookeeper comme configuré dans le fichier zookeeper.properties se lance sur le port 2181.
 
+##### Lancement serveur kafka
+
+De même que zookeeper nous devons configurer le fichier le configuration kafka  config/server.properties
+
+```
+Ouvrir un autre terminal
+cd $HOME/kafka/kafka_2.13-3.0.0
+vi config/server.properties
+```
+
+Ce fichier contient plusieurs lignes. Vous devez modifier la ligne suivante en settant le chemin absolu du répertoire log_kafka.
+
+```
+log.dirs=/tmp/kafka-logs
+```
+
+Maintenant vous pouvez lancer le serveur kafka avec la commande suivante :
+
+```
+Linux
+./bin/kafka-server-start.sh ./config/server.properties
+
+Windows
+./bin/windows/kafka-server-start.bat ./config/server.properties
+```
+
+Par défaut le broker kafka va tourner sur le port 9092
