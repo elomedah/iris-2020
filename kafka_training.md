@@ -96,3 +96,24 @@ Windows
 ```
 
 Par défaut le broker kafka va tourner sur le port 9092
+
+### Etape 4 : Topic, Producteur, Consomateur
+
+Grâce aux étapes précedentes notre cluster (à ce stade composé d'un seul broker kafka et une instance zookeeper) kafka est prêt à être utilisé.  
+Pour commencer à envoyer des messages, créons un topic.
+
+```
+Ouvrir un autre terminal
+cd $HOME/kafka/kafka_2.13-3.0.0
+Création de topic
+./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic mon-tunnel-topic
+Lister les topics
+ ./bin/kafka-topics.sh --list --zookeeper localhost:2181
+ 
+ Sur windows
+ ./bin/windows/kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic mon-tunnel-topic
+ ./bin/windows/kafka-topics.bat --list --zookeeper localhost:2181
+
+
+```
+
