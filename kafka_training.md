@@ -1,5 +1,5 @@
 # Kafka Training
-https://dzone.com/articles/running-apache-kafka-on-windows-os   
+Ce TP est inspiré du site officiel de kafka (https://kafka.apache.org/quickstart)    
 Dans ce TP, nous allons installer une plateforme Kafka.
 Il est recommandé de faire le tp sur le linux.  
 Si vous utilisez windows vous avez la possibilité d'installer wsl en suivant les instructions sur ce lien
@@ -85,6 +85,8 @@ Par défaut le broker kafka va tourner sur le port 9092
 ### Etape 4 : Topic, Producteur, Consomateur
 
 Grâce aux étapes précedentes notre cluster (à ce stade composé d'un seul broker kafka et une instance zookeeper) kafka est prêt à être utilisé.  
+
+##### Topic
 Pour commencer à envoyer des messages, créons un topic.
 
 ```
@@ -97,3 +99,61 @@ Lister les topics
 
 ```
 
+##### Producteur
+
+```
+./bin/kafka-console-producer.sh --topic mon-tunnel-topic --bootstrap-server localhost:9092
+```
+##### Consomateur
+
+```
+./bin/kafka-console-consumer.sh --topic mon-tunnel-topic --bootstrap-server localhost:9092
+```
+Rédemarrez le consumer en ajoutant l'option --from-beginning
+
+```
+./bin/kafka-console-consumer.sh --topic mon-tunnel-topic --from-beginning --bootstrap-server localhost:9092
+```
+
+Que remarquez-vous ?
+
+### Etape 5 : Groupe de messages, partitions
+
+##### Groupe de messages
+Dans Kafka, un groupe représente un ensemble de consommateurs partageant les mêmes offsets, et donc aussi les mêmes partitions et les mêmes topics. Il ne peut pas y avoir deux consommateurs du même groupe sur une même partition. Si le groupe contient plus de consommateurs que de partitions, certains consommateurs ne seront pas utilisés.
+
+Un groupe est identifié par un groupId, qui est une simple chaîne de caractères. Il est déclaré au niveau des consommateurs et il est géré au niveau brokers.
+
+Lancer deux consomateurs dans 2 terminaux différents.
+```
+./bin/kafka-console-consumer.sh --topic mon-tunnel-topic --bootstrap-server localhost:9092 --consumer-property group.id="message-group-1"
+```
+Que remarquez-vous ?
+
+##### Partitions
+
+Une partition est une manière de distribuer les données d'un même topic. On précise le nombre de partition par l'option --partitions lors de la création d'un topic kafka-topics.sh --create
+
+```
+Créer un topic avec le nombre de partition à 3
+./bin/kafka-topics.sh --create  --replication-factor 1 --partitions 3 --topic mon-tunnel-topic-2 --bootstrap-server localhost:9092
+
+```
+
+Un topic peut être composé de plusieurs partitions. Chacune de ces partitions contient des messages différents. Lorsqu'un producer émet un message, c'est à lui de décider à quelle partition il l'ajoute. Les producteurs disposent de plusieurs possibilités pour choisir :
+
+* Aléatoirement : pour chaque message, une partition est choisie au hasard. C'est ce qui est fait par notre kafka-console-producer.
+* Round robin : le producer itére sur les partitions les unes après les autres pour distribuer un nombre de message égal sur chaque partition.
+* Hashage : le producer peut choisir une partition en fonction du contenu du message.
+
+Lancer un nouveau producer avec le topic créé précedement
+
+```
+./bin/kafka-console-producer.sh --topic mon-tunnel-topic-2 --bootstrap-server localhost:9092
+```
+
+Lancer deux consommateurs avec le topic créé précedement
+```
+./bin/kafka-console-consumer.sh --topic mon-tunnel-topic-2 --bootstrap-server localhost:9092 --consumer-property group.id="message-group-2"
+```
+Que remarquez-vous ?
