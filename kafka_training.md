@@ -1,7 +1,9 @@
 # Kafka Training
 https://dzone.com/articles/running-apache-kafka-on-windows-os   
 Dans ce TP, nous allons installer une plateforme Kafka.
-
+Il est recommandé de faire le tp sur le linux.  
+Si vous utilisez windows vous avez la possibilité d'installer wsl en suivant les instructions sur ce lien
+https://docs.microsoft.com/fr-fr/windows/wsl/install
 ### Etape 1: Télécharger les fichiers 
 
 Pour faciliter le TP, créer un répertoire de travail kafka. 
@@ -15,7 +17,14 @@ Télécharger Kafka : http://kafka.apache.org/downloads.html  (https://dlcdn.apa
 wget https://dlcdn.apache.org/kafka/3.0.0/kafka_2.13-3.0.0.tgz
 ```
 
-Télécharger Java : http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html (optionnel si vous avez déjà java)   
+Télécharger Java : http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html (optionnel si vous avez déjà java)  
+
+```
+java -version
+sudo apt install default-jre
+```
+
+
 Télécharger zookeeper : http://zookeeper.apache.org/releases.html  (optionnel)
 
 Copier les fichiers téléchargés dans le repertoire kafka.
@@ -38,13 +47,6 @@ Pour lancer Kafka sur votre machine, vous devez avoir deux serveurs :
 * Le Zookeeper (le gestionnaire de cluter kafka).  
 * Le serveur Kafka.  
 
-Pour faciliter les configurations, vous devez créer ces deux répertoires. On découvrira le long du temps à quoi ils vont servir.
-
-```
-cd $HOME/kafka/
-mkdir log_zookeeper
-mkdir log_kafka
-```
 
 ##### Lancement zookeeper
 
@@ -56,20 +58,11 @@ Avant de lancer Zookeeper ouvrez le fichier de configuration ./config/zookeeper.
 cd $HOME/kafka/kafka_2.13-3.0.0
 vi ./config/zookeeper.properties
 ```
-Ce fichier contient plusieurs lignes. Vous devez modifier la ligne suivante en settant le chemin absolu du répertoire log_zookeeper.
-```
-dataDir=/tmp/zookeeper
-```
 
 Pour lancer Zookeeper il faut exécuter la commande suivante :
 ```
 cd $HOME/kafka/kafka_2.13-3.0.0
-
-Pour Linux
 ./bin/zookeeper-server-start.sh ./config/zookeeper.properties
-
-Pour windows
-./bin/windows/zookeeper-server-start.bat ./config/zookeeper.properties
 ```
 
 Zookeeper comme configuré dans le fichier zookeeper.properties se lance sur le port 2181.
@@ -84,20 +77,11 @@ cd $HOME/kafka/kafka_2.13-3.0.0
 vi config/server.properties
 ```
 
-Ce fichier contient plusieurs lignes. Vous devez modifier la ligne suivante en settant le chemin absolu du répertoire log_kafka.
-
-```
-log.dirs=/tmp/kafka-logs
-```
 
 Maintenant vous pouvez lancer le serveur kafka avec la commande suivante :
 
 ```
-Linux
 ./bin/kafka-server-start.sh ./config/server.properties
-
-Windows
-./bin/windows/kafka-server-start.bat ./config/server.properties
 ```
 
 Par défaut le broker kafka va tourner sur le port 9092
@@ -111,14 +95,9 @@ Pour commencer à envoyer des messages, créons un topic.
 Ouvrir un autre terminal
 cd $HOME/kafka/kafka_2.13-3.0.0
 Création de topic
-./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic mon-tunnel-topic
+./bin/kafka-topics.sh --create  --replication-factor 1 --partitions 1 --topic mon-tunnel-topic --bootstrap-server localhost:9092
 Lister les topics
- ./bin/kafka-topics.sh --list --zookeeper localhost:2181
- 
- Sur windows
- ./bin/windows/kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic mon-tunnel-topic
- ./bin/windows/kafka-topics.bat --list --zookeeper localhost:2181
-
+ ./bin/kafka-topics.sh --list --bootstrap-server localhost:9092
 
 ```
 
