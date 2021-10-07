@@ -36,10 +36,6 @@ Décompresser le fichier kafka télécharger à l'étape 1
 tar zxvf kafka_2.13-3.0.0.tgz
 ```
 
-Vérifier que java est bien installé sur votre poste.  
-Sinon vous devriez procéder à l'installation de java  
-https://www.java.com/fr/download/help/windows_manual_download.html#download
-
 ### Etape 3 : Lancement de zookeeper et kafka
 
 Pour lancer Kafka sur votre machine, vous devez avoir deux serveurs :
