@@ -157,3 +157,29 @@ Lancer deux consommateurs avec le topic créé précedement
 ./bin/kafka-console-consumer.sh --topic mon-tunnel-topic-2 --bootstrap-server localhost:9092 --consumer-property group.id="message-group-2"
 ```
 Que remarquez-vous ?
+
+### Etape 6 : Ajouter des brokers kafka
+
+##### Plusieurs brokers
+Notre cluster kafka actuel ne contient qu'un seul broker. Nous sommes loin de mettre en place une plateforme tolérente aux pannes. Pour rémedier à ce problème, nous allons ajouter de nouveaux brokers.  
+Pour cela dupliquer le fichier de configuration de kafka. 
+Modifier les paramètres broker.id et décommenter la ligne listeners en modifiant le port.
+```
+cp config/server.properties config/server.1.properties
+```
+broker.id=1  
+listeners=PLAINTEXT://:9093  
+
+##### Nouveau topic
+
+Créer un nouveau topic en précisant les adresses de vos brokers kafka.  
+Mettez le facteur --replication-factor à 2
+Mettez le nombre de partitions à 4 --partitions 4
+Decrivez le topic en utilisant le script kafka-topics.sh  
+Que remarquez-vous ?
+```
+./bin/kafka-topics.sh --create  --replication-factor 2 --partitions 4 --topic mon-tunnel-topic-replica --bootstrap-server localhost:9092,localhost:9093
+
+./bin/kafka-topics.sh --describe --topic mon-tunnel-topic-replica --bootstrap-server localhost:9092,localhost:9093 
+```
+
