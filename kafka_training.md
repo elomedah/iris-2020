@@ -173,10 +173,10 @@ listeners=PLAINTEXT://:9093
 ##### Nouveau topic
 
 Créer un nouveau topic en précisant les adresses de vos brokers kafka.  
-Mettez le facteur --replication-factor à 2
-Mettez le nombre de partitions à 4 --partitions 4
-Decrivez le topic en utilisant le script kafka-topics.sh  
-Que remarquez-vous ?
+Mettez le facteur --replication-factor à 2  
+Mettez le nombre de partitions à 4 --partitions 4  
+Decrivez le topic en utilisant le script kafka-topics.sh    
+Que remarquez-vous ?  
 ```
 ./bin/kafka-topics.sh --create  --replication-factor 2 --partitions 4 --topic mon-tunnel-topic-replica --bootstrap-server localhost:9092,localhost:9093
 
