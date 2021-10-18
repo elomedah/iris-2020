@@ -17,6 +17,7 @@ Vous devez installer le système ubuntu sur votre machine
 Si vous utilisez déja une distribution linux vous pouvez installer mongodb en suivant la documentation de votre distribution.
 
 Documentation officielle d'installation sur ubuntu https://doc.ubuntu-fr.org/mongodb
+Documentation officielle d'installation sur Mac https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
 
 ### Installation et démarrage
 
@@ -37,7 +38,7 @@ Lancer mongodb :
 sudo service mongod start
 ```
 
-Si la commande échoue, vous pouvez démarrer mongod manuellement en suivant les étapes suivantes. Dans ce cas mongod ne sera pas un service mais ne vous empêchera pas de suivre le TP.
+Si la commande échoue, vous pouvez démarrer mongo manuellement en suivant les étapes suivantes. Dans ce cas mongo ne sera pas un service mais ne vous empêchera pas de suivre le TP.
 ```
 sudo mkdir -p /data/db
 sudo  nohup mongod & 
