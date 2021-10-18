@@ -53,8 +53,45 @@ mongo
 
 Exécuter cette requête
 ```
-show dbs
+>show dbs
 ```
 
 ## Commande de base
+
+Connexion à une base : use nom_de_la_base. Cette commande possède une double fonction, elle assure la connexion si la base existe, elle la crée puis s’y connecte si la base n’existe pas encore. Une fois connecté, la commande db permet de connaître la base.
+
+```
+> use iris_user_db
+switched to db iris_user_db
+> db
+iris_user_db
+>
+```
+
+La syntaxe utilisée est une syntaxe JavaScript  
+
+#### Les collections
+MongoDB est dit schemaless (sans schéma de base de données), on ne précise rien de la structure des données qui seront insérées par la suite dans la collection.
+
+###### Création de collections
+Exécuter la commande suivante pour créer une collection.
+```
+> db.createCollection('etudiant')
+{ "ok" : 1 }
+```
+SQL : create table etudiant ... 
+
+show collections permet de lister toutes les collections de la base courante.
+```
+> show collections
+etudiant
+```
+
+Supprimer une collection
+```
+> db.etudiant.drop()
+true
+```
+En SQL : drop table etudiant
+
 ## Import de données et requetage
