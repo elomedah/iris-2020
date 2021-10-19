@@ -76,22 +76,80 @@ MongoDB est dit schemaless (sans schéma de base de données), on ne précise ri
 ###### Création de collections
 Exécuter la commande suivante pour créer une collection.
 ```
-> db.createCollection('etudiant')
+db.createCollection('etudiant')
 { "ok" : 1 }
 ```
 SQL : create table etudiant ... 
 
 show collections permet de lister toutes les collections de la base courante.
 ```
-> show collections
-etudiant
+show collections
 ```
 
-Supprimer une collection
+###### Supprission d'une collection
 ```
-> db.etudiant.drop()
-true
+db.etudiant.drop()
 ```
 En SQL : drop table etudiant
 
+###### Gérer des documents
+
+Insertion des documents
+ https://docs.mongodb.com/manual/tutorial/insert-documents/ 
+ 
+```
+db.etudiant.insert({'nom': 'Matthieu', 'prenom': 'Galet', 'age': 12, 'username' : 'matgal', 'sexe' : 'M'})
+db.etudiant.insert({'nom': 'Dauv', 'prenom': 'Jeremie', 'age': 22, 'username' : 'jeremie', 'sexe' : 'M'})
+db.etudiant.insert({'nom': 'Ali', 'prenom': 'Hassani', 'age': 25, 'username' : 'aliha', 'sexe' : 'M'})
+db.etudiant.insert({'nom': 'Deves', 'prenom': 'Sara', 'age': 18, 'username' : 'devsara', 'sexe' : 'F'})
+```
+L'équivalent sql est : insert into etudiant(nom,prenom,age,username,sexe) values ( ...........)
+
+Vous pouvez insérer plusieurs entrées dans la même requête en utilisant insertMany
+
+```
+db.etudiant.insertMany([
+...  {'nom': 'Simon', 'prenom': 'Pierre', 'age': 56, 'username' : 'simonp', 'sexe' : 'M', 'contact' : {'email': 'simon@iris.com'}},
+...  {'nom': 'Hilda', 'prenom': 'Anne', 'age': 32, 'username' : 'anned', 'sexe' : 'F', 'contact' : {'tel': '07342567893'}},
+...  {'nom': 'Dann', 'prenom': 'Yanne', 'username' : 'danni', 'sexe' : 'F', 'contact' : {'email': 'danni1992@iris.com', 'tel': '07342567893'}}
+... ])
+```
+
+Que remarquez-vous concernant les différents types de données (format des chaînes de caractères, nombres) ?  
+Est-ce que tous les attributs sont obligatoires ? 
+
+###### Lister ou trouver les documents d’une collection
+https://docs.mongodb.com/manual/tutorial/query-documents/
+
+Récuper tous les étudiants
+```
+db.etudiant.find({})
+```
+L'équivalent sql est : select * from etudiant
+
+Sélectionner uniquement les étudiantes
+```
+db.etudiant.find({'sexe' : 'F'})
+```
+L'équivalent sql est : select * from etudiant where sexe='F'
+
+
+Sélectionner les étudiants de sexe masculin et majeurs
+
+https://docs.mongodb.com/manual/reference/operator/query-comparison/#std-label-query-selectors-comparison 
+
+```
+db.etudiant.find({'sexe' : 'M', age: { $gte: 18 }})
+```
+L'équivalent sql est : select * from etudiant where sexe='M' and age >= 18   
+
+Sélectionner les étudiants de sexe F ou les étudiants majeurs
+
+```
+db.etudiant.find( { $or: [{sexe: "F"}, {age:{ $gte: 18 } } ] } )
+```
+L'équivalent sql est : select * from etudiant where sexe='F' or age >= 18   
+
+
 ## Import de données et requetage
+
