@@ -86,12 +86,6 @@ show collections permet de lister toutes les collections de la base courante.
 show collections
 ```
 
-###### Supprission d'une collection
-```
-db.etudiant.drop()
-```
-En SQL : drop table etudiant
-
 ###### Gérer des documents
 
 Insertion des documents
@@ -109,10 +103,10 @@ Vous pouvez insérer plusieurs entrées dans la même requête en utilisant inse
 
 ```
 db.etudiant.insertMany([
-...  {'nom': 'Simon', 'prenom': 'Pierre', 'age': 56, 'username' : 'simonp', 'sexe' : 'M', 'contact' : {'email': 'simon@iris.com'}},
-...  {'nom': 'Hilda', 'prenom': 'Anne', 'age': 32, 'username' : 'anned', 'sexe' : 'F', 'contact' : {'tel': '07342567893'}},
-...  {'nom': 'Dann', 'prenom': 'Yanne', 'username' : 'danni', 'sexe' : 'F', 'contact' : {'email': 'danni1992@iris.com', 'tel': '07342567893'}}
-... ])
+ {'nom': 'Simon', 'prenom': 'Pierre', 'age': 56, 'username' : 'simonp', 'sexe' : 'M', 'contact' : {'email': 'simon@iris.com'}},
+ {'nom': 'Hilda', 'prenom': 'Anne', 'age': 32, 'username' : 'anned', 'sexe' : 'F', 'contact' : {'tel': '07342567893'}},
+ {'nom': 'Dann', 'prenom': 'Yanne', 'username' : 'danni', 'sexe' : 'F', 'contact' : {'email': 'danni1992@iris.com', 'tel': '07342567893'}}
+])
 ```
 
 Que remarquez-vous concernant les différents types de données (format des chaînes de caractères, nombres) ?  
@@ -150,6 +144,36 @@ db.etudiant.find( { $or: [{sexe: "F"}, {age:{ $gte: 18 } } ] } )
 ```
 L'équivalent sql est : select * from etudiant where sexe='F' or age >= 18   
 
+###### Mise à jour d'un document
+https://docs.mongodb.com/manual/tutorial/update-documents/
+
+```
+db.etudiant.updateOne(
+   { 'nom': "Dann" },
+   {
+     $set: { "age": 29}
+   }
+)
+```
+L'équivalent sql est : update etudiant set age=29 where nom='Dann'
+
+###### Suppression d'un document
+https://docs.mongodb.com/manual/tutorial/remove-documents/
+
+```
+db.etudiant.deleteOne( { nom: "Simon" } )
+```
+
+L'équivalent sql est : delete from etudiant where nom='Simon'
+
+Que fait la commande deleteMany ? 
+Sans exécuter ce code db.xxxx.deleteMany({}) (xxxx étant la collection) que se passerait-il ?
+
+###### Suppression d'une collection
+```
+db.etudiant.drop()
+```
+En SQL : drop table etudiant
 
 ## Import de données et requetage
 
