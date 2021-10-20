@@ -177,3 +177,11 @@ En SQL : drop table etudiant
 
 ## Import de données et requetage
 
+###### Import de données
+
+https://docs.mongodb.com/database-tools/mongoimport/ 
+
+La syntaxe
+```
+mongoimport --db my_db_name --collection collectionName --file fileName.json
+```
