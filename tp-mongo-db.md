@@ -181,7 +181,20 @@ En SQL : drop table etudiant
 
 https://docs.mongodb.com/database-tools/mongoimport/ 
 
+```
+$ wget https://raw.githubusercontent.com/elomedah/iris-2020/main/prix-nobel.json
+```
+La base de données sera nommée : prix_nobel_db
+La collection sera nommée : laureat
 La syntaxe
 ```
 mongoimport --db my_db_name --collection collectionName --file fileName.json
 ```
+
+1. Combien de documents ont été importés ?
+2. Que fait la commande db.laureat.findOne()?
+3. Quel laureat à gagner le prix nobel en 2000 en medecine ?
+4. Afficher les lauréats 
+5. Afficher uniquement les categories où le prix nobel est decerné 
+
+7. Quelle année le premier prix nobel a été decerné ?
