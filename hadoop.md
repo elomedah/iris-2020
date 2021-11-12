@@ -119,6 +119,7 @@ $HADOOP_HOME/sbin/start-yarn.sh
 ```
 ### Vérification
 
-L'interface du namenode http://localhost:9870
-L'interface du datanode  http://localhost:9864
-L'interface yarn : http://localhost:8042
+L'interface du namenode http://localhost:9870   
+L'interface du datanode  http://localhost:9864 
+L'interface yarn (ressource manager) : http://localhost:8088  
+L'interface yarn (node manager) : http://localhost:8042   
